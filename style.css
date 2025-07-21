@@ -242,3 +242,15 @@ body.light-mode .anim-btn:hover {
     transform: translateX(-50%);
   }
 }
+#top-bar .switch {
+  justify-content: flex-end;
+  flex: 0 0 auto; /* <--- prevent it from stretching */
+}
+.anim-btn.selected {
+  background-color: #819067;
+  color: white;
+}
+body:not(.light-mode) .anim-btn.selected {
+  background-color: white;
+  color: black;
+}
