@@ -4,21 +4,14 @@
   <meta charset="UTF-8" />
   <title>3D Viewer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Manifest + Favicon -->
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="icons/icon-192.png" type="image/png" />
-
-  <!-- Styles -->
   <link rel="stylesheet" href="style.css" />
-
-  <!-- Three.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 </head>
 <body>
 
-  <!-- Top Control Bar -->
   <div id="top-bar">
     <div id="upload-section">
       <label for="modelUpload" class="custom-file-label">Choose .glb Model</label>
@@ -31,28 +24,27 @@
       <button class="anim-btn" data-anim="hover">Hover</button>
     </div>
 
-    <label class="switch">
-      <input type="checkbox" id="themeToggle" />
-      <span class="slider"></span>
-    </label>
+    <div id="themeWrapper">
+      <label class="switch">
+        <input type="checkbox" id="themeToggle" />
+        <span class="slider"></span>
+      </label>
+    </div>
   </div>
 
-  <!-- Canvas -->
   <canvas id="avatar-canvas"></canvas>
 
-  <!-- Up/Down Controls -->
   <div id="controls">
     <button id="upBtn" aria-label="Move Up"><span class="chevron chevron-up"></span></button>
     <button id="downBtn" aria-label="Move Down"><span class="chevron chevron-down"></span></button>
   </div>
 
-  <!-- Scripts -->
   <script src="main.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service-worker.js')
-        .then((reg) => console.log('✅ Service worker registered:', reg.scope))
-        .catch((err) => console.error('❌ Service worker failed:', err));
+        .then(reg => console.log('✅ Service worker registered:', reg.scope))
+        .catch(err => console.error('❌ Service worker failed:', err));
     }
   </script>
 </body>

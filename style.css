@@ -7,6 +7,7 @@ body {
   padding: 0;
   overflow: hidden;
   background-color: #111;
+  font-family: sans-serif;
 }
 
 canvas#avatar-canvas {
@@ -20,7 +21,7 @@ canvas#avatar-canvas:active {
   cursor: grabbing;
 }
 
-/* Top Bar (upload + anim + toggle) */
+/* ========== TOP BAR ========== */
 #top-bar {
   position: fixed;
   top: 20px;
@@ -30,72 +31,23 @@ canvas#avatar-canvas:active {
   flex-wrap: wrap;
   gap: 10px;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   z-index: 10;
 }
 
-#top-bar > * {
-  flex: 1 1 auto;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-#upload-section {
-  justify-content: center;
-}
-
-#top-bar .switch {
-  justify-content: flex-end;
-}
-
-/* Controls (Up/Down) */
-#controls {
-  position: fixed;
-  top: 50%;
-  right: 20px;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  z-index: 10;
-}
-
-#controls button {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  color: #111;
+#upload-section,
+#animControls,
+#themeWrapper {
   display: flex;
   align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  transition: all 0.2s ease-in-out;
+  gap: 10px;
 }
 
-#controls button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+#themeWrapper {
+  flex: 0 0 auto;
 }
 
-#controls button:active {
-  transform: scale(0.96);
-  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.2);
-}
-
-body:not(.light-mode) #controls button {
-  background: rgba(255, 255, 255, 0.05);
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-}
-
-/* Upload Button */
+/* ========== Upload Button ========== */
 .custom-file-label {
   padding: 10px 16px;
   background-color: rgba(255, 255, 255, 0.1);
@@ -108,11 +60,15 @@ body:not(.light-mode) #controls button {
   user-select: none;
 }
 
-/* Animation Buttons */
+body.light-mode .custom-file-label {
+  background-color: #f0f0f0;
+  color: #222;
+  border-color: #bbb;
+}
+
+/* ========== Animation Buttons ========== */
 #animControls {
-  display: flex;
   gap: 10px;
-  margin-top: 10px;
 }
 
 .anim-btn {
@@ -125,6 +81,7 @@ body:not(.light-mode) #controls button {
   font-size: 14px;
   font-weight: 500;
   user-select: none;
+  transition: background 0.2s;
 }
 
 .anim-btn:hover {
@@ -136,11 +93,32 @@ body:not(.light-mode) #controls button {
   color: black;
 }
 
-/* Toggle switch */
+body.light-mode .anim-btn {
+  background-color: #f0f0f0;
+  color: #222;
+  border-color: #bbb;
+}
+
+body.light-mode .anim-btn:hover {
+  background-color: #e6e6e6;
+}
+
+body.light-mode .anim-btn.selected {
+  background-color: #819067;
+  color: white;
+}
+
+body:not(.light-mode) .anim-btn.selected {
+  background-color: white;
+  color: black;
+}
+
+/* ========== TOGGLE SWITCH ========== */
 .switch {
   position: relative;
   width: 50px;
   height: 28px;
+  flex-shrink: 0;
 }
 
 .switch input {
@@ -162,8 +140,8 @@ body:not(.light-mode) #controls button {
 }
 
 .slider:before {
-  content: "";
   position: absolute;
+  content: "";
   height: 20px;
   width: 20px;
   left: 4px;
@@ -181,24 +159,47 @@ body:not(.light-mode) #controls button {
   transform: translateX(22px);
 }
 
-/* Light mode */
-body.light-mode .custom-file-label,
-body.light-mode .anim-btn {
-  background-color: #f0f0f0;
-  color: #222;
-  border-color: #bbb;
+/* ========== CONTROL BUTTONS ========== */
+#controls {
+  position: fixed;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 10;
 }
 
-body.light-mode .anim-btn.selected {
-  background-color: #819067;
-  color: white;
+#controls button {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+  color: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
 }
 
-body.light-mode .anim-btn:hover {
-  background-color: #e6e6e6;
+#controls button:hover {
+  transform: translateY(-2px);
 }
 
-/* Chevron */
+#controls button:active {
+  transform: scale(0.96);
+}
+
+body:not(.light-mode) #controls button {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 .chevron {
   width: 0.6em;
   height: 0.6em;
@@ -215,7 +216,7 @@ body.light-mode .anim-btn:hover {
   transform: rotate(45deg);
 }
 
-/* ========== Responsive (Mobile) ========== */
+/* ========== RESPONSIVE ========== */
 @media (max-width: 600px) {
   #top-bar {
     flex-direction: column;
@@ -223,15 +224,20 @@ body.light-mode .anim-btn:hover {
     gap: 10px;
   }
 
-  #top-bar > * {
-    width: 100%;
+  #upload-section,
+  #animControls,
+  #themeWrapper {
+    flex-direction: row;
     justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
   }
 
   .custom-file-label,
   .anim-btn {
     width: 100%;
     max-width: 250px;
+    text-align: center;
   }
 
   #controls {
@@ -241,16 +247,4 @@ body.light-mode .anim-btn:hover {
     left: 50%;
     transform: translateX(-50%);
   }
-}
-#top-bar .switch {
-  justify-content: flex-end;
-  flex: 0 0 auto; /* <--- prevent it from stretching */
-}
-.anim-btn.selected {
-  background-color: #819067;
-  color: white;
-}
-body:not(.light-mode) .anim-btn.selected {
-  background-color: white;
-  color: black;
 }
