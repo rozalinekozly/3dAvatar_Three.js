@@ -116,6 +116,35 @@ document.getElementById('downBtn').addEventListener('click', () => {
   camera.position.y -= 0.1;
 });
 
+let lastTouch = null;
+
+renderer.domElement.addEventListener('touchstart', (e) => {
+  if (e.touches.length === 1) {
+    lastTouch = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  }
+});
+
+renderer.domElement.addEventListener('touchmove', (e) => {
+  if (!lastTouch || e.touches.length !== 1 || !avatar) return;
+
+  const touch = e.touches[0];
+  const delta = {
+    x: touch.clientX - lastTouch.x,
+    y: touch.clientY - lastTouch.y
+  };
+
+  const speed = 0.005;
+  avatar.rotation.y += delta.x * speed;
+  avatar.rotation.x += delta.y * speed;
+
+  lastTouch = { x: touch.clientX, y: touch.clientY };
+});
+
+renderer.domElement.addEventListener('touchend', () => {
+  lastTouch = null;
+});
+
+
 // Theme
 const themeToggle = document.getElementById('themeToggle');
 
