@@ -101,21 +101,7 @@ renderer.domElement.addEventListener('mousemove', (e) => {
 window.addEventListener('mouseup', () => isDragging = false);
 renderer.domElement.addEventListener('mouseleave', () => isDragging = false);
 
-// Zoom
-renderer.domElement.addEventListener('wheel', (e) => {
-  e.preventDefault();
-  camera.position.z += e.deltaY * 0.001;
-  camera.position.z = Math.min(Math.max(camera.position.z, 0.1), 20);
-});
-
-// Up/Down
-document.getElementById('upBtn').addEventListener('click', () => {
-  camera.position.y += 0.1;
-});
-document.getElementById('downBtn').addEventListener('click', () => {
-  camera.position.y -= 0.1;
-});
-
+// Touch rotation
 let lastTouch = null;
 
 renderer.domElement.addEventListener('touchstart', (e) => {
@@ -144,8 +130,23 @@ renderer.domElement.addEventListener('touchend', () => {
   lastTouch = null;
 });
 
+// Zoom
+renderer.domElement.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  camera.position.z += e.deltaY * 0.001;
+  camera.position.z = Math.min(Math.max(camera.position.z, 0.1), 20);
+});
 
-// Theme
+// Up/Down controls
+document.getElementById('upBtn').addEventListener('click', () => {
+  camera.position.y += 0.1;
+});
+
+document.getElementById('downBtn').addEventListener('click', () => {
+  camera.position.y -= 0.1;
+});
+
+// Theme toggle
 const themeToggle = document.getElementById('themeToggle');
 
 function isLight() {
@@ -177,7 +178,7 @@ document.querySelectorAll('.anim-btn').forEach((btn) => {
   });
 });
 
-// Animate Loop
+// Animate
 function animate() {
   requestAnimationFrame(animate);
   const delta = clock.getDelta();

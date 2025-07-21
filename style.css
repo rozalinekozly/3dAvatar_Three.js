@@ -1,71 +1,68 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
   overflow: hidden;
   background-color: #111;
+  font-family: sans-serif;
 }
 
+/* Canvas */
 canvas#avatar-canvas {
   width: 100vw;
   height: 100vh;
   display: block;
   cursor: grab;
 }
-
 canvas#avatar-canvas:active {
   cursor: grabbing;
 }
 
-#controls {
-  position: fixed;
-  top: 50%;
-  right: 20px;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  z-index: 10;
-}
-
-#controls button {
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border: 1px solid #ccc;
-  color: white;
-  font-size: 20px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-#controls button:hover {
-  background-color: rgba(255, 255, 255, 0.25);
-}
-#upload-section {
+/* Top Bar */
+#top-bar {
   position: fixed;
   top: 20px;
   left: 20px;
+  right: 20px;
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   align-items: center;
+  justify-content: space-between;
   z-index: 10;
 }
 
+#upload-section,
+#animControls,
+#toggleWrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Upload Button */
 .custom-file-label {
   padding: 10px 16px;
   background-color: rgba(255, 255, 255, 0.1);
   border: 1px solid #ccc;
   border-radius: 8px;
   color: white;
-  cursor: pointer;
-  transition: background 0.2s;
   font-size: 14px;
   font-weight: 500;
-  -webkit-user-select: none;
+  cursor: pointer;
   user-select: none;
 }
+body.light-mode .custom-file-label {
+  background-color: #f0f0f0;
+  color: #222;
+  border-color: #bbb;
+}
 
-#uploadBtn {
+/* Animation Buttons */
+.anim-btn {
   padding: 10px 16px;
   background-color: rgba(255, 255, 255, 0.1);
   border: 1px solid #ccc;
@@ -74,45 +71,46 @@ canvas#avatar-canvas:active {
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  transition: background 0.2s;
 }
-
-#uploadBtn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
+.anim-btn:hover {
+  background-color: rgba(255, 255, 255, 0.25);
 }
-
-/* Light mode */
-body.light-mode .custom-file-label,
-body.light-mode #uploadBtn {
+.anim-btn.selected {
+  background-color: white;
+  color: black;
+}
+body.light-mode .anim-btn {
   background-color: #f0f0f0;
   color: #222;
   border-color: #bbb;
 }
-
-body.light-mode #uploadBtn:disabled {
-  opacity: 0.5;
+body.light-mode .anim-btn:hover {
+  background-color: #e6e6e6;
+}
+body.light-mode .anim-btn.selected {
+  background-color: #819067;
+  color: white;
+}
+body:not(.light-mode) .anim-btn.selected {
+  background-color: white;
+  color: black;
 }
 
-/* Toggle container */
+/* Toggle Switch */
+#toggleWrapper {
+  flex: 0 0 auto;
+}
 .switch {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 10;
-  display: inline-block;
   width: 50px;
   height: 28px;
+  position: relative;
+  flex-shrink: 0;
 }
-
-/* Hide default checkbox */
 .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
-
-/* Slider style */
 .slider {
   position: absolute;
   cursor: pointer;
@@ -124,11 +122,9 @@ body.light-mode #uploadBtn:disabled {
   transition: 0.4s;
   border-radius: 34px;
 }
-
-/* Circle */
 .slider:before {
-  position: absolute;
   content: "";
+  position: absolute;
   height: 20px;
   width: 20px;
   left: 4px;
@@ -137,52 +133,43 @@ body.light-mode #uploadBtn:disabled {
   transition: 0.4s;
   border-radius: 50%;
 }
-
-/* Checked toggle */
 .switch input:checked + .slider {
-  background-color: #819067; /* iOS green */
+  background-color: #819067;
 }
-
 .switch input:checked + .slider:before {
   transform: translateX(22px);
 }
 
+/* Up/Down Buttons */
+#controls {
+  position: fixed;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 10;
+}
 #controls button {
   width: 44px;
   height: 44px;
-  border: none;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   color: #111;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: all 0.2s ease-in-out;
   cursor: pointer;
-  border: 1px solid rgba(255, 255, 255, 0.4);
 }
-
-#controls button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-#controls button:active {
-  transform: scale(0.96);
-  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.2);
-}
-
-/* Dark mode override */
 body:not(.light-mode) #controls button {
   background: rgba(255, 255, 255, 0.05);
   color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
+/* Chevron */
 .chevron {
   width: 0.6em;
   height: 0.6em;
@@ -190,57 +177,39 @@ body:not(.light-mode) #controls button {
   border-bottom: 2px solid currentColor;
   transform: rotate(45deg);
 }
-
 .chevron-up {
   transform: rotate(-135deg);
 }
-
 .chevron-down {
   transform: rotate(45deg);
 }
 
+/* Responsive */
+@media (max-width: 600px) {
+  #top-bar {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
 
-#animControls {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
+  #upload-section,
+  #animControls,
+  #toggleWrapper {
+    width: 100%;
+    justify-content: center;
+  }
 
-.anim-btn {
-  padding: 10px 16px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  color: white;
-  cursor: pointer;
-  transition: background 0.2s;
-  font-size: 14px;
-  font-weight: 500;
-  -webkit-user-select: none;
-  user-select: none;
-}
+  .custom-file-label,
+  .anim-btn {
+    width: 100%;
+    max-width: 250px;
+  }
 
-.anim-btn:hover {
-  background-color: rgba(255, 255, 255, 0.25);
-}
-
-.anim-btn.selected {
-  background-color: white;
-  color: black;
-}
-
-/* Light mode */
-body.light-mode .anim-btn {
-  background-color: #f0f0f0;
-  color: #222;
-  border-color: #bbb;
-}
-
-body.light-mode .anim-btn:hover {
-  background-color: #e6e6e6;
-}
-
-body.light-mode .anim-btn.selected {
-  background-color: #819067;
-  color: white;
+  #controls {
+    flex-direction: row;
+    top: auto;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
