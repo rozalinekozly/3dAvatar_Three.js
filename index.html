@@ -1,51 +1,57 @@
+flex-wrap media queries to add it as an attribute where
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <title>3D Viewer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="icon" href="icons/icon-192.png" type="image/png" />
+  
   <link rel="stylesheet" href="style.css" />
+  <!-- Three.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- GLTFLoader -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 </head>
 <body>
+   <div id="upload-section">
+  <label for="modelUpload" class="custom-file-label">Choose .glb Model</label>
+  <input type="file" id="modelUpload" accept=".glb" hidden />
 
-  <div id="top-bar">
-    <div id="upload-section">
-      <label for="modelUpload" class="custom-file-label">Choose .glb Model</label>
-      <input type="file" id="modelUpload" accept=".glb" hidden />
-    </div>
-
-    <div id="animControls">
-      <button class="anim-btn selected" data-anim="off">Off</button>
-      <button class="anim-btn" data-anim="turn">Turn</button>
-      <button class="anim-btn" data-anim="hover">Hover</button>
-    </div>
-
-    <div id="themeWrapper">
-      <label class="switch">
-        <input type="checkbox" id="themeToggle" />
-        <span class="slider"></span>
-      </label>
-    </div>
+  <div id="animControls">
+    <button class="anim-btn selected" data-anim="off">Off</button>
+    <button class="anim-btn" data-anim="turn">Turn</button>
+    <button class="anim-btn" data-anim="hover">Hover</button>
   </div>
+</div>
+
+
+<label class="switch">
+  <input type="checkbox" id="themeToggle" />
+  <span class="slider"></span>
+</label>
+
+
 
   <canvas id="avatar-canvas"></canvas>
 
-  <div id="controls">
-    <button id="upBtn" aria-label="Move Up"><span class="chevron chevron-up"></span></button>
-    <button id="downBtn" aria-label="Move Down"><span class="chevron chevron-down"></span></button>
-  </div>
+
+
+
+  
+<div id="controls">
+  <button id="upBtn" aria-label="Move Up">
+    <span class="chevron chevron-up"></span>
+  </button>
+  <button id="downBtn" aria-label="Move Down">
+    <span class="chevron chevron-down"></span>
+  </button>
+</div>
+
 
   <script src="main.js"></script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
-        .then(reg => console.log('✅ Service worker registered:', reg.scope))
-        .catch(err => console.error('❌ Service worker failed:', err));
-    }
-  </script>
 </body>
 </html>
+and this to add where
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js');
+} 

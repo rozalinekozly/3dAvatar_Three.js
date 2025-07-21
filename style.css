@@ -1,13 +1,8 @@
-* {
-  box-sizing: border-box;
-}
-
 body {
   margin: 0;
   padding: 0;
   overflow: hidden;
   background-color: #111;
-  font-family: sans-serif;
 }
 
 canvas#avatar-canvas {
@@ -21,145 +16,6 @@ canvas#avatar-canvas:active {
   cursor: grabbing;
 }
 
-/* ========== TOP BAR ========== */
-#top-bar {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  right: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  align-items: center;
-  justify-content: space-between;
-  z-index: 10;
-}
-
-#upload-section,
-#animControls,
-#themeWrapper {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-#themeWrapper {
-  flex: 0 0 auto;
-}
-
-/* ========== Upload Button ========== */
-.custom-file-label {
-  padding: 10px 16px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  color: white;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  user-select: none;
-}
-
-body.light-mode .custom-file-label {
-  background-color: #f0f0f0;
-  color: #222;
-  border-color: #bbb;
-}
-
-/* ========== Animation Buttons ========== */
-#animControls {
-  gap: 10px;
-}
-
-.anim-btn {
-  padding: 10px 16px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  color: white;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  user-select: none;
-  transition: background 0.2s;
-}
-
-.anim-btn:hover {
-  background-color: rgba(255, 255, 255, 0.25);
-}
-
-.anim-btn.selected {
-  background-color: white;
-  color: black;
-}
-
-body.light-mode .anim-btn {
-  background-color: #f0f0f0;
-  color: #222;
-  border-color: #bbb;
-}
-
-body.light-mode .anim-btn:hover {
-  background-color: #e6e6e6;
-}
-
-body.light-mode .anim-btn.selected {
-  background-color: #819067;
-  color: white;
-}
-
-body:not(.light-mode) .anim-btn.selected {
-  background-color: white;
-  color: black;
-}
-
-/* ========== TOGGLE SWITCH ========== */
-.switch {
-  position: relative;
-  width: 50px;
-  height: 28px;
-  flex-shrink: 0;
-}
-
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #777;
-  transition: 0.4s;
-  border-radius: 34px;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 20px;
-  width: 20px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  transition: 0.4s;
-  border-radius: 50%;
-}
-
-.switch input:checked + .slider {
-  background-color: #819067;
-}
-
-.switch input:checked + .slider:before {
-  transform: translateX(22px);
-}
-
-/* ========== CONTROL BUTTONS ========== */
 #controls {
   position: fixed;
   top: 50%;
@@ -172,32 +28,159 @@ body:not(.light-mode) .anim-btn.selected {
 }
 
 #controls button {
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid #ccc;
+  color: white;
+  font-size: 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#controls button:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+#upload-section {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  z-index: 10;
+}
+
+.custom-file-label {
+  padding: 10px 16px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-size: 14px;
+  font-weight: 500;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#uploadBtn {
+  padding: 10px 16px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#uploadBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Light mode */
+body.light-mode .custom-file-label,
+body.light-mode #uploadBtn {
+  background-color: #f0f0f0;
+  color: #222;
+  border-color: #bbb;
+}
+
+body.light-mode #uploadBtn:disabled {
+  opacity: 0.5;
+}
+
+/* Toggle container */
+.switch {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+}
+
+/* Hide default checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Slider style */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #777;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+/* Circle */
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+/* Checked toggle */
+.switch input:checked + .slider {
+  background-color: #819067; /* iOS green */
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(22px);
+}
+
+#controls button {
   width: 44px;
   height: 44px;
+  border: none;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   color: #111;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.2s ease-in-out;
   cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 #controls button:hover {
   transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 #controls button:active {
   transform: scale(0.96);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
+/* Dark mode override */
 body:not(.light-mode) #controls button {
   background: rgba(255, 255, 255, 0.05);
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
 .chevron {
@@ -216,35 +199,48 @@ body:not(.light-mode) #controls button {
   transform: rotate(45deg);
 }
 
-/* ========== RESPONSIVE ========== */
-@media (max-width: 600px) {
-  #top-bar {
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-  }
 
-  #upload-section,
-  #animControls,
-  #themeWrapper {
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-    width: 100%;
-  }
+#animControls {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
 
-  .custom-file-label,
-  .anim-btn {
-    width: 100%;
-    max-width: 250px;
-    text-align: center;
-  }
+.anim-btn {
+  padding: 10px 16px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-size: 14px;
+  font-weight: 500;
+  -webkit-user-select: none;
+  user-select: none;
+}
 
-  #controls {
-    flex-direction: row;
-    top: auto;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
+.anim-btn:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+.anim-btn.selected {
+  background-color: white;
+  color: black;
+}
+
+/* Light mode */
+body.light-mode .anim-btn {
+  background-color: #f0f0f0;
+  color: #222;
+  border-color: #bbb;
+}
+
+body.light-mode .anim-btn:hover {
+  background-color: #e6e6e6;
+}
+
+body.light-mode .anim-btn.selected {
+  background-color: #819067;
+  color: white;
 }
